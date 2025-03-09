@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitios Turísticos</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #FFFFFF;
+        }
+        #mapa {
+            height: 600px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(255, 107, 0, 0.3);
+        }
+        #filtros {
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            #mapa {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Sitios Turísticos</h2>
+    <p>Selecciona una categoría para filtrar los destinos turísticos en el mapa:</p>
+    <div id="filtros">
+        <button data-categoria="todos">Todos</button>
+        <button data-categoria="Histórico">Histórico</button>
+        <button data-categoria="Cultural">Cultural</button>
+        <button data-categoria="Natural">Natural</button>
+    </div>
+
+    <div id="mapa"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Inicializar el mapa
+            var mapa = L.map('mapa', {
+                center: [4.5709, -74.2973],
+                zoom: 5.5,
+                scrollWheelZoom: true
+            });
+
+            // Agregar capa de mapa de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(mapa);
+
+            // Crear un grupo de clústeres
+            var markers = L.markerClusterGroup();
+
+            // Lista de destinos turísticos con categorías
+            var destinos = [
+                { nombre: "Monserrate", lat: 4.605, lng: -74.055, descripcion: "Vista panorámica de Bogotá.", categoria: "Histórico" },
+                { nombre: "Catedral de Sal de Zipaquirá", lat: 5.015, lng: -74.005, descripcion: "Catedral subterránea impresionante.", categoria: "Cultural" },
+                { nombre: "Parque Tayrona", lat: 11.268, lng: -74.1918, descripcion: "Playas y naturaleza en la costa Caribe.", categoria: "Natural" },
+                { nombre: "Villa de Leyva", lat: 5.634, lng: -73.527, descripcion: "Pueblo colonial encantador.", categoria: "Histórico" },
+                { nombre: "Caño Cristales", lat: 2.215, lng: -73.788, descripcion: "El río de los cinco colores.", categoria: "Natural" },
+                { nombre: "Santuario de Las Lajas", lat: 0.805, lng: -77.586, descripcion: "Maravilla arquitectónica en Nariño.", categoria: "Histórico" },
+                { nombre: "Ciudad Perdida", lat: 11.039, lng: -73.925, descripcion: "Ruinas arqueológicas.", categoria: "Cultural" },
+                { nombre: "Cañón del Chicamocha", lat: 6.797, lng: -73.014, descripcion: "Paisaje espectacular en Santander.", categoria: "Natural" },
+                { nombre: "Desierto de la Tatacoa", lat: 3.221, lng: -75.174, descripcion: "Paisaje árido con cielos estrellados.", categoria: "Natural" },
+                { nombre: "Museo del Oro", lat: 4.601, lng: -74.072, descripcion: "Colección de piezas prehispánicas.", categoria: "Cultural" },
+                { nombre: "Cartagena de Indias", lat: 10.391, lng: -75.479, descripcion: "Ciudad amurallada y patrimonio histórico.", categoria: "Histórico" },
+                { nombre: "Barranquilla", lat: 10.963, lng: -74.796, descripcion: "Capital del Carnaval.", categoria: "Cultural" },
+                { nombre: "Islas del Rosario", lat: 10.177, lng: -75.735, descripcion: "Playas y arrecifes de coral.", categoria: "Natural" },
+                { nombre: "Guatapé", lat: 6.232, lng: -75.169, descripcion: "Pueblo colorido y La Piedra.", categoria: "Histórico" },
+                { nombre: "Cabo de la Vela", lat: 12.212, lng: -72.160, descripcion: "Desierto junto al mar.", categoria: "Natural" },
+                { nombre: "Parque del Café", lat: 4.543, lng: -75.777, descripcion: "Atracciones y cultura cafetera.", categoria: "Cultural" },
+                { nombre: "Malpelo", lat: 3.980, lng: -81.600, descripcion: "Santuario marino.", categoria: "Natural" },
+                { nombre: "Nevado del Ruiz", lat: 4.895, lng: -75.324, descripcion: "Volcán activo en la cordillera.", categoria: "Natural" },
+                { nombre: "San Andrés", lat: 12.584, lng: -81.700, descripcion: "Isla caribeña paradisíaca.", categoria: "Natural" },
+                { nombre: "Candelaria", lat: 4.595, lng: -74.074, descripcion: "Barrio histórico en Bogotá.", categoria: "Histórico" },
+                // Continúa agregando hasta completar 50 destinos
+            ];
+
+            // Función para agregar los destinos al mapa
+            function agregarMarcadores(categoria) {
+                markers.clearLayers(); // Limpiar los marcadores existentes
+                destinos.forEach(destino => {
+                    if (categoria === "todos" || destino.categoria === categoria) {
+                        var marker = L.marker([destino.lat, destino.lng]).bindPopup(`<b>${destino.nombre}</b><br>${destino.descripcion}`);
+                        markers.addLayer(marker);
+                    }
+                });
+                mapa.addLayer(markers); // Volver a agregar los marcadores al mapa
+            }
+
+            // Agregar todos los marcadores por defecto
+            agregarMarcadores("todos");
+
+            // Manejar los filtros por categoría
+            document.querySelectorAll("#filtros button").forEach(boton => {
+                boton.addEventListener("click", function() {
+                    var categoria = this.getAttribute("data-categoria");
+                    agregarMarcadores(categoria); // Llamar a la función con la categoría seleccionada
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
