@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa Interactivo - Turismo en Colombia</title>
+    <title>Sitios Turisticos</title>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -20,7 +20,7 @@
             padding: 20px;
         }
         h2 {
-            color: #ff6b00;
+            color: ##FFFFFF;
         }
         #mapa {
             height: 600px;
@@ -37,7 +37,7 @@
 </head>
 <body>
 
-    <h2>Mapa Interactivo de Turismo en Colombia</h2>
+    <h2>Sitios Turisticos</h2>
     <div id="mapa"></div>
 
     <!-- Leaflet JS -->
@@ -109,3 +109,4 @@
 
 </body>
 </html>
+
