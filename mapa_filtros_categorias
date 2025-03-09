@@ -27,6 +27,11 @@
             width: 100%;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(255, 107, 0, 0.3);
+            overflow: auto; /* Habilita barras de desplazamiento */
+        }
+        /* Forzar barras de desplazamiento visibles */
+        html, body {
+            overflow: scroll; /* Habilitar tanto horizontal como vertical */
         }
         #filtros {
             margin: 20px 0;
@@ -47,6 +52,7 @@
         <button data-categoria="Histórico">Histórico</button>
         <button data-categoria="Cultural">Cultural</button>
         <button data-categoria="Natural">Natural</button>
+        <button data-categoria="Comidas">Comidas</button>
     </div>
 
     <div id="mapa"></div>
@@ -77,6 +83,7 @@
                 { nombre: "Monserrate", lat: 4.605, lng: -74.055, descripcion: "Vista panorámica de Bogotá.", categoria: "Histórico" },
                 { nombre: "Catedral de Sal de Zipaquirá", lat: 5.015, lng: -74.005, descripcion: "Catedral subterránea impresionante.", categoria: "Cultural" },
                 { nombre: "Parque Tayrona", lat: 11.268, lng: -74.1918, descripcion: "Playas y naturaleza en la costa Caribe.", categoria: "Natural" },
+{ nombre: "Crepes_wafles_av19", lat: 4.701355288737346, lng: -74.04931336675543, descripcion: "Bogotá", categoria: "Comidas" },
                 { nombre: "Villa de Leyva", lat: 5.634, lng: -73.527, descripcion: "Pueblo colonial encantador.", categoria: "Histórico" },
                 { nombre: "Caño Cristales", lat: 2.215, lng: -73.788, descripcion: "El río de los cinco colores.", categoria: "Natural" },
                 { nombre: "Santuario de Las Lajas", lat: 0.805, lng: -77.586, descripcion: "Maravilla arquitectónica en Nariño.", categoria: "Histórico" },
@@ -84,9 +91,8 @@
                 { nombre: "Cañón del Chicamocha", lat: 6.797, lng: -73.014, descripcion: "Paisaje espectacular en Santander.", categoria: "Natural" },
                 { nombre: "Desierto de la Tatacoa", lat: 3.221, lng: -75.174, descripcion: "Paisaje árido con cielos estrellados.", categoria: "Natural" },
                 { nombre: "Museo del Oro", lat: 4.601, lng: -74.072, descripcion: "Colección de piezas prehispánicas.", categoria: "Cultural" },
-                { nombre: "Cartagena de Indias", lat: 10.391, lng: -75.479, descripcion: "Ciudad amurallada y patrimonio histórico.", categoria: "Histórico" },
-                { nombre: "Barranquilla", lat: 10.963, lng: -74.796, descripcion: "Capital del Carnaval.", categoria: "Cultural" },
-                { nombre: "Islas del Rosario", lat: 10.177, lng: -75.735, descripcion: "Playas y arrecifes de coral.", categoria: "Natural" },
+                { nombre: "Cartagena de Indias", lat: 10.391, lng: -75.479, descripcion: "Ciudad amurallada y patrimonio histórico.", categoria: "Histórico" },{ nombre: "Barranquilla", lat: 10.963, lng: -74.796, descripcion: "Capital del Carnaval.", categoria: "Cultural" },
+                             
                 { nombre: "Guatapé", lat: 6.232, lng: -75.169, descripcion: "Pueblo colorido y La Piedra.", categoria: "Histórico" },
                 { nombre: "Cabo de la Vela", lat: 12.212, lng: -72.160, descripcion: "Desierto junto al mar.", categoria: "Natural" },
                 { nombre: "Parque del Café", lat: 4.543, lng: -75.777, descripcion: "Atracciones y cultura cafetera.", categoria: "Cultural" },
@@ -94,7 +100,38 @@
                 { nombre: "Nevado del Ruiz", lat: 4.895, lng: -75.324, descripcion: "Volcán activo en la cordillera.", categoria: "Natural" },
                 { nombre: "San Andrés", lat: 12.584, lng: -81.700, descripcion: "Isla caribeña paradisíaca.", categoria: "Natural" },
                 { nombre: "Candelaria", lat: 4.595, lng: -74.074, descripcion: "Barrio histórico en Bogotá.", categoria: "Histórico" },
-                // Continúa agregando hasta completar 50 destinos
+
+                { nombre: "Islas del Rosario", lat: 10.177, lng: -75.735, descripcion: "Playas y arrecifes de coral.", categoria: "Natural" },
+    { "nombre": "Cerro de Mavicure", "lat": 3.227, "lng": -67.857, "descripcion": "Formaciones rocosas impresionantes en la selva.", "categoria": "Natural" },
+    { "nombre": "Laguna de la Cocha", "lat": 1.118, "lng": -77.163, "descripcion": "Hermoso lago en Nariño con paisajes únicos.", "categoria": "Natural" },
+    { "nombre": "Amazonas", "lat": -3.784, "lng": -70.299, "descripcion": "Explora la selva amazónica colombiana.", "categoria": "Natural" },
+    { "nombre": "Mompox", "lat": 9.241, "lng": -74.426, "descripcion": "Ciudad colonial detenida en el tiempo.", "categoria": "Histórico" },
+    { "nombre": "Río Claro", "lat": 5.897, "lng": -74.850, "descripcion": "Reserva natural con aguas cristalinas.", "categoria": "Natural" },
+    { "nombre": "Cascada de Juan Curí", "lat": 6.435, "lng": -73.176, "descripcion": "Impresionante caída de agua en Santander.", "categoria": "Natural" },
+    { "nombre": "Playa Blanca", "lat": 10.273, "lng": -75.608, "descripcion": "Hermosa playa de arena blanca cerca de Cartagena.", "categoria": "Natural" },
+    { "nombre": "Palomino", "lat": 11.263, "lng": -73.550, "descripcion": "Playa y río en la Sierra Nevada.", "categoria": "Natural" },
+    { "nombre": "Piedra del Peñol", "lat": 6.222, "lng": -75.171, "descripcion": "Gigantesca roca con vista panorámica.", "categoria": "Natural" },
+    { "nombre": "Santuario de Fauna y Flora Los Flamencos", "lat": 11.470, "lng": -72.690, "descripcion": "Refugio de flamencos rosados en La Guajira.", "categoria": "Natural" },
+    { "nombre": "Tatamá", "lat": 5.030, "lng": -76.208, "descripcion": "Parque Nacional con biodiversidad única.", "categoria": "Natural" },
+    { "nombre": "Cascada de Fin del Mundo", "lat": 1.122, "lng": -77.162, "descripcion": "Espectacular cascada en Putumayo.", "categoria": "Natural" },
+    { "nombre": "Isla Gorgona", "lat": 2.966, "lng": -78.183, "descripcion": "Antigua prisión ahora convertida en parque natural.", "categoria": "Natural" },
+    { "nombre": "Nuquí", "lat": 5.712, "lng": -77.267, "descripcion": "Paraíso del ecoturismo en el Pacífico.", "categoria": "Natural" },
+    { "nombre": "Valle de Cocora", "lat": 4.637, "lng": -75.500, "descripcion": "Hogar de las palmas de cera más altas.", "categoria": "Natural" },
+    { "nombre": "Santa Cruz de Lorica", "lat": 9.236, "lng": -75.818, "descripcion": "Pueblo con arquitectura árabe y colonial.", "categoria": "Histórico" },
+    { "nombre": "Termales de Santa Rosa de Cabal", "lat": 4.872, "lng": -75.543, "descripcion": "Aguas termales en la montaña.", "categoria": "Natural" },
+    { "nombre": "La Chorrera", "lat": 4.375, "lng": -73.946, "descripcion": "La cascada más alta de Colombia.", "categoria": "Natural" },
+    { "nombre": "Cabo Corrientes", "lat": 6.582, "lng": -77.368, "descripcion": "Acantilados impresionantes sobre el Pacífico.", "categoria": "Natural" },
+    { "nombre": "Punta Gallinas", "lat": 12.457, "lng": -71.678, "descripcion": "El punto más al norte de Sudamérica.", "categoria": "Natural" },
+    { "nombre": "Parque Nacional El Tuparro", "lat": 5.434, "lng": -67.849, "descripcion": "Llanuras y ríos en la Orinoquía.", "categoria": "Natural" },
+    { "nombre": "Playa El Almejal", "lat": 6.176, "lng": -77.377, "descripcion": "Hermosa playa en Bahía Solano.", "categoria": "Natural" },
+    { "nombre": "Parque Arqueológico de Tierradentro", "lat": 2.583, "lng": -76.000, "descripcion": "Tumbas y arte rupestre precolombino.", "categoria": "Cultural" },
+    { "nombre": "Isla de Providencia", "lat": 13.377, "lng": -81.368, "descripcion": "Paraíso caribeño con playas y arrecifes.", "categoria": "Natural" },
+    { "nombre": "Páramo de Santurbán", "lat": 7.317, "lng": -72.917, "descripcion": "Ecosistema de alta montaña con lagunas.", "categoria": "Natural" },
+    { "nombre": "Ráquira", "lat": 5.539, "lng": -73.634, "descripcion": "Pueblo famoso por su cerámica artesanal.", "categoria": "Cultural" },
+    { "nombre": "Parque Nacional Macuira", "lat": 12.147, "lng": -71.331, "descripcion": "Oasis en medio del desierto de La Guajira.", "categoria": "Natural" },
+    { "nombre": "Yopal", "lat": 5.346, "lng": -72.395, "descripcion": "Puerta de entrada a los Llanos Orientales.", "categoria": "Cultural" },
+    { "nombre": "Ciénaga Grande de Santa Marta", "lat": 10.894, "lng": -74.480, "descripcion": "Ecosistema de manglares y aves acuáticas.", "categoria": "Natural" },
+
             ];
 
             // Función para agregar los destinos al mapa
@@ -121,6 +158,5 @@
             });
         });
     </script>
-
 </body>
 </html>
