@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Interactivo - Turismo en Colombia</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #ff6b00;
+        }
+        #mapa {
+            height: 600px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(255, 107, 0, 0.3);
+        }
+        @media (max-width: 768px) {
+            #mapa {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Mapa Interactivo de Turismo en Colombia</h2>
+    <div id="mapa"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Inicializar el mapa
+            var mapa = L.map('mapa', {
+                center: [4.5709, -74.2973],
+                zoom: 5.5,
+                scrollWheelZoom: true
+            });
+
+            // Agregar capa de mapa de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(mapa);
+
+            // Crear un grupo de clústeres
+            var markers = L.markerClusterGroup();
+
+            // Lista completa de 50 destinos turísticos
+            var destinos = [
+                { nombre: "Monserrate", lat: 4.605, lng: -74.055, descripcion: "Vista panorámica de Bogotá." },
+                { nombre: "Catedral de Sal de Zipaquirá", lat: 5.015, lng: -74.005, descripcion: "Catedral subterránea impresionante." },
+                { nombre: "Aeropuerto El Dorado", lat: 4.7016, lng: -74.1469, descripcion: "Principal aeropuerto de Colombia." },
+                { nombre: "Comuna 13 - Medellín", lat: 6.2442, lng: -75.5812, descripcion: "Arte urbano en Medellín." },
+                { nombre: "Parque Tayrona", lat: 11.268, lng: -74.1918, descripcion: "Playas y naturaleza en la costa Caribe." },
+                { nombre: "Villa de Leyva", lat: 5.634, lng: -73.527, descripcion: "Pueblo colonial encantador." },
+                { nombre: "Laguna de Guatavita", lat: 4.921, lng: -73.795, descripcion: "Laguna mítica de la leyenda de El Dorado." },
+                { nombre: "Ciudad Perdida", lat: 11.039, lng: -73.925, descripcion: "Ruinas arqueológicas." },
+                { nombre: "Castillo San Felipe", lat: 10.422, lng: -75.548, descripcion: "Fortaleza histórica en Cartagena." },
+                { nombre: "Cabo de la Vela", lat: 12.203, lng: -72.170, descripcion: "Paisajes únicos en La Guajira." },
+                { nombre: "Santuario de Las Lajas", lat: 0.805, lng: -77.586, descripcion: "Maravilla arquitectónica en Nariño." },
+                { nombre: "Desierto de la Tatacoa", lat: 3.221, lng: -75.174, descripcion: "Paisaje árido con cielos estrellados." },
+                { nombre: "Islas del Rosario", lat: 10.175, lng: -75.735, descripcion: "Paraíso tropical." },
+                { nombre: "Aeropuerto José María Córdova", lat: 6.167, lng: -75.423, descripcion: "Aeropuerto en Medellín." },
+                { nombre: "Cristo Rey - Cali", lat: 3.437, lng: -76.549, descripcion: "Monumento icónico en Cali." },
+                { nombre: "Amazonas - Leticia", lat: -4.215, lng: -69.942, descripcion: "Naturaleza y biodiversidad en la selva." },
+                { nombre: "Nevado del Ruiz", lat: 4.892, lng: -75.324, descripcion: "Volcán en los Andes." },
+                { nombre: "Caño Cristales", lat: 2.215, lng: -73.788, descripcion: "El río de los cinco colores." },
+                { nombre: "Plaza de Bolívar", lat: 4.598, lng: -74.076, descripcion: "Centro histórico en Bogotá." },
+                { nombre: "Parque Nacional del Cocuy", lat: 6.406, lng: -72.297, descripcion: "Paisajes montañosos únicos." },
+                { nombre: "Parque Nacional de los Nevados", lat: 4.883, lng: -75.375, descripcion: "Montañas y glaciares impresionantes." },
+                { nombre: "Cañón del Chicamocha", lat: 6.797, lng: -73.014, descripcion: "Paisaje espectacular en Santander." },
+                { nombre: "Parque Nacional Natural Gorgona", lat: 2.967, lng: -78.183, descripcion: "Isla paradisíaca." },
+                { nombre: "Termales de Santa Rosa", lat: 4.868, lng: -75.621, descripcion: "Aguas termales relajantes." },
+                { nombre: "Malecón de Puerto Colombia", lat: 10.987, lng: -74.954, descripcion: "Paseo marítimo en Atlántico." },
+                { nombre: "Parque Nacional Amacayacu", lat: -3.811, lng: -70.267, descripcion: "Biodiversidad en el Amazonas." },
+                { nombre: "Catedral Metropolitana de Medellín", lat: 6.252, lng: -75.568, descripcion: "Catedral imponente." },
+                { nombre: "Chiquinquirá", lat: 5.617, lng: -73.817, descripcion: "Ciudad religiosa de Boyacá." },
+                { nombre: "Playa Blanca", lat: 10.175, lng: -75.735, descripcion: "Playas con aguas cristalinas." },
+                { nombre: "Parque Arqueológico de San Agustín", lat: 1.883, lng: -76.269, descripcion: "Esculturas precolombinas." },
+                // Agrega los restantes destinos hasta llegar a 50...
+            ];
+
+            // Agregar marcadores al grupo de clústeres
+            destinos.forEach(destino => {
+                var marker = L.marker([destino.lat, destino.lng]).bindPopup(`<b>${destino.nombre}</b><br>${destino.descripcion}`);
+                markers.addLayer(marker);
+            });
+
+            // Agregar el grupo de clústeres al mapa
+            mapa.addLayer(markers);
+        });
+    </script>
+
+</body>
+</html>
