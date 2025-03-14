@@ -39,6 +39,7 @@
         .Todos { background-color: #f2ff00; }
         .Histórico { background-color: #007BFF; }
         .Cultural { background-color: #28A745; }
+        .Playas { background-color:#ff7700; }
         .Natural { background-color: #DC3545; }
         .active { 
             box-shadow: 0 0 12px rgba(0,0,0,0.4); 
@@ -54,6 +55,7 @@
         <button class="filter-btn Histórico" data-category="Histórico">Histórico</button>
         <button class="filter-btn Cultural" data-category="Cultural">Cultural</button>
         <button class="filter-btn Natural" data-category="Natural">Natural</button>
+        <button class="filter-btn Playas" data-category="Playas">Playas</button>
     </div>
     <div id="map"></div>
     
@@ -64,10 +66,12 @@
         }).addTo(map);
 
         var icons = {
-            "Histórico": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/vueltiao.png', iconSize: [30, 30] }),
-            "Cultural": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/cartagena.png', iconSize: [30, 30] }),
-            "Natural": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/guitar.png', iconSize: [30, 30] })
-        };
+    "Histórico": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/vueltiao.png', iconSize: [30, 30] }),
+    "Cultural": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/cartagena.png', iconSize: [30, 30] }),
+    "Natural": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/guitar.png', iconSize: [30, 30] }),  // ✅ Agregada coma aquí
+    "Playas": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/summer-holidays.png', iconSize: [30, 30] })
+};
+
 
         var lugares = [
             { nombre: "Monserrate", lat: 4.605, lng: -74.055, descripcion: "Vista panorámica de Bogotá.", categoria: "Histórico" },
@@ -85,25 +89,25 @@
                 { nombre: "Guatapé", lat: 6.232, lng: -75.169, descripcion: "Pueblo colorido y La Piedra.", categoria: "Histórico" },
                 { nombre: "Cabo de la Vela", lat: 12.212, lng: -72.160, descripcion: "Desierto junto al mar.", categoria: "Natural" },
                 { nombre: "Parque del Café", lat: 4.543, lng: -75.777, descripcion: "Atracciones y cultura cafetera.", categoria: "Cultural" },
-                { nombre: "Malpelo", lat: 3.980, lng: -81.600, descripcion: "Santuario marino.", categoria: "Natural" },
+                { nombre: "Malpelo", lat: 3.980, lng: -81.600, descripcion: "Santuario marino.", categoria: "Playas" },
                 { nombre: "Nevado del Ruiz", lat: 4.895, lng: -75.324, descripcion: "Volcán activo en la cordillera.", categoria: "Natural" },
-                { nombre: "San Andrés", lat: 12.584, lng: -81.700, descripcion: "Isla caribeña paradisíaca.", categoria: "Natural" },
+                { nombre: "San Andrés", lat: 12.584, lng: -81.700, descripcion: "Isla caribeña paradisíaca.", categoria: "Playas" },
                 { nombre: "Candelaria", lat: 4.595, lng: -74.074, descripcion: "Barrio histórico en Bogotá.", categoria: "Histórico" },
 
-                { nombre: "Islas del Rosario", lat: 10.177, lng: -75.735, descripcion: "Playas y arrecifes de coral.", categoria: "Natural" },
+                { nombre: "Islas del Rosario", lat: 10.177, lng: -75.735, descripcion: "Playas y arrecifes de coral.", categoria: "Playas" },
     { "nombre": "Cerro de Mavicure", "lat": 3.227, "lng": -67.857, "descripcion": "Formaciones rocosas impresionantes en la selva.", "categoria": "Natural" },
     { "nombre": "Laguna de la Cocha", "lat": 1.118, "lng": -77.163, "descripcion": "Hermoso lago en Nariño con paisajes únicos.", "categoria": "Natural" },
     { "nombre": "Amazonas", "lat": -3.784, "lng": -70.299, "descripcion": "Explora la selva amazónica colombiana.", "categoria": "Natural" },
     { "nombre": "Mompox", "lat": 9.241, "lng": -74.426, "descripcion": "Ciudad colonial detenida en el tiempo.", "categoria": "Histórico" },
     { "nombre": "Río Claro", "lat": 5.897, "lng": -74.850, "descripcion": "Reserva natural con aguas cristalinas.", "categoria": "Natural" },
     { "nombre": "Cascada de Juan Curí", "lat": 6.435, "lng": -73.176, "descripcion": "Impresionante caída de agua en Santander.", "categoria": "Natural" },
-    { "nombre": "Playa Blanca", "lat": 10.273, "lng": -75.608, "descripcion": "Hermosa playa de arena blanca cerca de Cartagena.", "categoria": "Natural" },
+    { "nombre": "Playa Blanca", "lat": 10.273, "lng": -75.608, "descripcion": "Hermosa playa de arena blanca cerca de Cartagena.", "categoria": "Playas" },
     { "nombre": "Palomino", "lat": 11.263, "lng": -73.550, "descripcion": "Playa y río en la Sierra Nevada.", "categoria": "Natural" },
     { "nombre": "Piedra del Peñol", "lat": 6.222, "lng": -75.171, "descripcion": "Gigantesca roca con vista panorámica.", "categoria": "Natural" },
     { "nombre": "Santuario de Fauna y Flora Los Flamencos", "lat": 11.470, "lng": -72.690, "descripcion": "Refugio de flamencos rosados en La Guajira.", "categoria": "Natural" },
     { "nombre": "Tatamá", "lat": 5.030, "lng": -76.208, "descripcion": "Parque Nacional con biodiversidad única.", "categoria": "Natural" },
     { "nombre": "Cascada de Fin del Mundo", "lat": 1.122, "lng": -77.162, "descripcion": "Espectacular cascada en Putumayo.", "categoria": "Natural" },
-    { "nombre": "Isla Gorgona", "lat": 2.966, "lng": -78.183, "descripcion": "Antigua prisión ahora convertida en parque natural.", "categoria": "Natural" },
+    { "nombre": "Isla Gorgona", "lat": 2.966, "lng": -78.183, "descripcion": "Antigua prisión ahora convertida en parque natural.", "categoria": "Playas" },
     { "nombre": "Nuquí", "lat": 5.712, "lng": -77.267, "descripcion": "Paraíso del ecoturismo en el Pacífico.", "categoria": "Natural" },
     { "nombre": "Valle de Cocora", "lat": 4.637, "lng": -75.500, "descripcion": "Hogar de las palmas de cera más altas.", "categoria": "Natural" },
     { "nombre": "Santa Cruz de Lorica", "lat": 9.236, "lng": -75.818, "descripcion": "Pueblo con arquitectura árabe y colonial.", "categoria": "Histórico" },
@@ -112,9 +116,9 @@
     { "nombre": "Cabo Corrientes", "lat": 6.582, "lng": -77.368, "descripcion": "Acantilados impresionantes sobre el Pacífico.", "categoria": "Natural" },
     { "nombre": "Punta Gallinas", "lat": 12.457, "lng": -71.678, "descripcion": "El punto más al norte de Sudamérica.", "categoria": "Natural" },
     { "nombre": "Parque Nacional El Tuparro", "lat": 5.434, "lng": -67.849, "descripcion": "Llanuras y ríos en la Orinoquía.", "categoria": "Natural" },
-    { "nombre": "Playa El Almejal", "lat": 6.176, "lng": -77.377, "descripcion": "Hermosa playa en Bahía Solano.", "categoria": "Natural" },
+    { "nombre": "Playa El Almejal", "lat": 6.176, "lng": -77.377, "descripcion": "Hermosa playa en Bahía Solano.", "categoria": "Playas" },
     { "nombre": "Parque Arqueológico de Tierradentro", "lat": 2.583, "lng": -76.000, "descripcion": "Tumbas y arte rupestre precolombino.", "categoria": "Cultural" },
-    { "nombre": "Isla de Providencia", "lat": 13.377, "lng": -81.368, "descripcion": "Paraíso caribeño con playas y arrecifes.", "categoria": "Natural" },
+    { "nombre": "Isla de Providencia", "lat": 13.377, "lng": -81.368, "descripcion": "Paraíso caribeño con playas y arrecifes.", "categoria": "Playas" },
     { "nombre": "Páramo de Santurbán", "lat": 7.317, "lng": -72.917, "descripcion": "Ecosistema de alta montaña con lagunas.", "categoria": "Natural" },
     { "nombre": "Ráquira", "lat": 5.539, "lng": -73.634, "descripcion": "Pueblo famoso por su cerámica artesanal.", "categoria": "Cultural" },
     { "nombre": "Parque Nacional Macuira", "lat": 12.147, "lng": -71.331, "descripcion": "Oasis en medio del desierto de La Guajira.", "categoria": "Natural" },
