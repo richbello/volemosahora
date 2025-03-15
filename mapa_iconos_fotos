@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa Interactivo de Colombia</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #map { 
+            height: 600px;
+            margin: 10px auto;
+            width: 90%;
+            border-radius: 10px;
+        }
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .filter-btn:hover {
+            transform: scale(1.1);
+        }
+        .Todos { background-color: #f2ff00; }
+        .Histórico { background-color: #007BFF; }
+        .Cultural { background-color: #28A745; }
+        .Playas { background-color:#ff7700; }
+        .Natural { background-color: #DC3545; }
+        .active { 
+            box-shadow: 0 0 12px rgba(0,0,0,0.4); 
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Colombia</h1>
+    <h2>Mapa Interactivo de Turismo</h2>
+    <div class="filter-container">
+        <button class="filter-btn Todos active" data-category="Todos">Todos</button>
+        <button class="filter-btn Histórico" data-category="Histórico">Histórico</button>
+        <button class="filter-btn Cultural" data-category="Cultural">Cultural</button>
+        <button class="filter-btn Natural" data-category="Natural">Natural</button>
+        <button class="filter-btn Playas" data-category="Playas">Playas</button>
+    </div>
+    <div id="map"></div>
+    
+    <script>
+        var map = L.map('map').setView([4.5709, -74.2973], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var icons = {
+    "Histórico": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/vueltiao.png', iconSize: [30, 30] }),
+    "Cultural": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/cartagena.png', iconSize: [30, 30] }),
+    "Natural": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/guitar.png', iconSize: [30, 30] }),  // ✅ Agregada coma aquí
+    "Playas": L.icon({ iconUrl: 'https://volemosahora.com/wp-content/uploads/2025/03/summer-holidays.png', iconSize: [30, 30] })
+};
+
+
+        var lugares = [
+            {
+        nombre: "Monserrate",lat: 4.605,lng: -74.055, descripcion: "Vista panorámica de Bogotá.",categoria: "Histórico",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/monserrate.jpeg"},
+                { nombre: "Catedral de Sal de Zipaquirá", lat: 5.015, lng: -74.005, descripcion: "Catedral subterránea impresionante.", categoria: "Cultural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/catedral-de-sal-zipaquira.jpeg"},
+                { nombre: "Parque Tayrona", lat: 11.268, lng: -74.1918, descripcion: "Playas y naturaleza en la costa Caribe.", categoria: "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/parque-tayrona.jpeg"},
+                { nombre: "Villa de Leyva", lat: 5.634, lng: -73.527, descripcion: "Pueblo colonial encantador.", categoria: "Histórico",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Villa-de-Leyva.jpeg"},
+                { nombre: "Caño Cristales", lat: 2.215, lng: -73.788, descripcion: "El río de los cinco colores.", categoria: "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Cano-Cristales.jpeg"},
+                { nombre: "Santuario de Las Lajas", lat: 0.805, lng: -77.586, descripcion: "Maravilla arquitectónica en Nariño.", categoria: "Histórico",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/santruario-de-las-lajas.jpeg"},
+                { nombre: "Ciudad Perdida", lat: 11.039, lng: -73.925, descripcion: "Ruinas arqueológicas.", categoria: "Cultural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Ciudad-Perdida.jpeg"},
+                { nombre: "Cañón del Chicamocha", lat: 6.797, lng: -73.014, descripcion: "Paisaje espectacular en Santander.", categoria: "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Canon-del-chicamocha-Santander-Colombia.jpeg"},
+                { nombre: "Desierto de la Tatacoa", lat: 3.221, lng: -75.174, descripcion: "Paisaje árido con cielos estrellados.", categoria: "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Desierto-De-La-Tatacoa-Colombia.jpeg"},
+                { nombre: "Museo del Oro", lat: 4.601, lng: -74.072, descripcion: "Colección de piezas prehispánicas.", categoria: "Cultural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Museo-del-Oro-_-La-Red-Cultural-del-Banco-de-la-Republica.jpeg"},
+                { nombre: "Cartagena de Indias", lat: 10.391, lng: -75.479, descripcion: "Ciudad amurallada y patrimonio histórico.", categoria: "Histórico" ,imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Cartagena-Colombia.jpeg"},
+{ nombre: "Barranquilla", lat: 10.963, lng: -74.796, descripcion: "Capital del Carnaval.", categoria: "Cultural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Barranquilla.jpeg"},
+                             
+                { nombre: "Guatapé", lat: 6.232, lng: -75.169, descripcion: "Pueblo colorido y La Piedra.", categoria: "Histórico",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Guatape.jpeg"},
+                { nombre: "Cabo de la Vela", lat: 12.212, lng: -72.160, descripcion: "Desierto junto al mar.", categoria: "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Cabo-de-la-vela-Guajira-Colombia.jpeg"},
+                { nombre: "Parque del Café", lat: 4.543, lng: -75.777, descripcion: "Atracciones y cultura cafetera.", categoria: "Cultural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Parque-del-Cafe_-Que-Hacer-en-tu-Visita-_-Actividades-_-Guia.jpeg"},
+                { nombre: "Malpelo", lat: 3.980, lng: -81.600, descripcion: "Santuario marino.", categoria: "Playas",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Isla-de-Malpelo-Colombia.jpeg"},
+                { nombre: "Nevado del Ruiz", lat: 4.895, lng: -75.324, descripcion: "Volcán activo en la cordillera.", categoria: "Natural", imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Nevado-del-Ruiz-Colombia.jpeg"},
+                { nombre: "San Andrés", lat: 12.584, lng: -81.700, descripcion: "Isla caribeña paradisíaca.", categoria: "Playas",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/San-Andres-islas-Colombia.jpeg"},
+                { nombre: "Candelaria", lat: 4.595, lng: -74.074, descripcion: "Barrio histórico en Bogotá.", categoria: "Histórico",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Barrio-La-Candelaria-2025-All-You-Need-to-Know-BEFORE-You-Go-with-Reviews.jpeg"},
+
+                { nombre: "Islas del Rosario", lat: 10.177, lng: -75.735, descripcion: "Playas y arrecifes de coral.", categoria: "Playas", imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Islas-del-Rosario-Cartagena-Colombia.jpeg"},
+    { "nombre": "Cerro de Mavicure", "lat": 3.227, "lng": -67.857, "descripcion": "Formaciones rocosas impresionantes en la selva.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Cerro-Mavicuri.jpeg"},
+    { "nombre": "Laguna de la Cocha", "lat": 1.118, "lng": -77.163, "descripcion": "Hermoso lago en Nariño con paisajes únicos.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Laguna-de-la-cocha-Pasto-Narino.jpeg"},
+    { "nombre": "Amazonas", "lat": -3.784, "lng": -70.299, "descripcion": "Explora la selva amazónica colombiana.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Amazonas-Colombia-Pueblo-Foto-gratis-en-Pixabay.jpeg"},
+    { "nombre": "Mompox", "lat": 9.241, "lng": -74.426, "descripcion": "Ciudad colonial detenida en el tiempo.", "categoria": "Histórico",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Mompox-Bolivar-Colombia-🇨🇴️-Creditos-📸_-@byroberelias.jpeg"},
+    { "nombre": "Río Claro", "lat": 5.897, "lng": -74.850, "descripcion": "Reserva natural con aguas cristalinas.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Canon-del-Rio-Claro-Reserva-Natural-2025-All-You-Need-to-Know-BEFORE-You-Go-with-Reviews.jpeg"},
+    { "nombre": "Cascada de Juan Curí", "lat": 6.435, "lng": -73.176, "descripcion": "Impresionante caída de agua en Santander.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Cascadas-de-Juan-Curi-Valle-de-San-Jose.jpeg"},
+    { "nombre": "Playa Blanca", "lat": 10.273, "lng": -75.608, "descripcion": "Hermosa playa de arena blanca cerca de Cartagena.", "categoria": "Playas",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Playa-Blanca-Baru-Cartagena-Colombia.jpeg"},
+    { "nombre": "Palomino", "lat": 11.263, "lng": -73.550, "descripcion": "Playa y río en la Sierra Nevada.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Palomino-Colombia_-The-Definitive-Travel-Guide-Roam-and-Thrive.jpeg"},
+    { "nombre": "Piedra del Peñol", "lat": 6.222, "lng": -75.171, "descripcion": "Gigantesca roca con vista panorámica.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/La-Piedra-Del-Penol-Colombia.jpeg"},
+    { "nombre": "Santuario de Fauna y Flora Los Flamencos", "lat": 11.470, "lng": -72.690, "descripcion": "Refugio de flamencos rosados en La Guajira.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Santuario-De-Fauna-y-Flora-Los-Flamencos-La-Guajira-Colombia.jpeg"},
+    { "nombre": "Tatamá", "lat": 5.030, "lng": -76.208, "descripcion": "Parque Nacional con biodiversidad única.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Santuario-y-Parque-Tatama_-Guia-de-Viaje.jpeg"},
+    { "nombre": "Cascada de Fin del Mundo", "lat": 1.122, "lng": -77.162, "descripcion": "Espectacular cascada en Putumayo.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Conoce-la-Cascada-Fin-del-Mundo-Putumayo-_-Travelgrafia.jpeg"},
+    { "nombre": "Isla Gorgona", "lat": 2.966, "lng": -78.183, "descripcion": "Antigua prisión ahora convertida en parque natural.", "categoria": "Playas",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Rock-The-Traveller-Viajar-es-nuestro-estilo-de-vida.jpeg"},
+    { "nombre": "Nuquí", "lat": 5.712, "lng": -77.267, "descripcion": "Paraíso del ecoturismo en el Pacífico.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/El-Cantil-Ecolodge-en-Nuqui-en-Colombia-Sudamerica-Viajeteca_com.jpeg"},
+    { "nombre": "Valle de Cocora", "lat": 4.637, "lng": -75.500, "descripcion": "Hogar de las palmas de cera más altas.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Valle-de-Cocora-Colombia-in-a-country-full-of-beautiful-landscapes.jpeg"},
+    { "nombre": "Santa Cruz de Lorica", "lat": 9.236, "lng": -75.818, "descripcion": "Pueblo con arquitectura árabe y colonial.", "categoria": "Histórico",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Santa-cruz-de-Lorica-Cordoba.jpeg"},
+    { "nombre": "Termales de Santa Rosa de Cabal", "lat": 4.872, "lng": -75.543, "descripcion": "Aguas termales en la montaña.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/termales-santa-rosa-de-cabal.jpg"},
+    { "nombre": "La Chorrera", "lat": 4.375, "lng": -73.946, "descripcion": "La cascada más alta de Colombia.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/La-Chorrera-Waterfall-Bogota-Day-Trip.jpeg"},
+    { "nombre": "Cabo Corrientes", "lat": 6.582, "lng": -77.368, "descripcion": "Acantilados impresionantes sobre el Pacífico.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Cabo-corrientes-choco-colombia_-From-another-world.jpeg"},
+    { "nombre": "Punta Gallinas", "lat": 12.457, "lng": -71.678, "descripcion": "El punto más al norte de Sudamérica.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Ganz-im-Norden_-La-Guajira-und-Punta-Gallinas-_-Kolumbienblog.jpeg"},
+    { "nombre": "Parque Nacional El Tuparro", "lat": 5.434, "lng": -67.849, "descripcion": "Llanuras y ríos en la Orinoquía.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/El-Tuparro-National-Park.jpeg"},
+    { "nombre": "Playa El Almejal", "lat": 6.176, "lng": -77.377, "descripcion": "Hermosa playa en Bahía Solano.", "categoria": "Playas",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/el-almejal-bahia-solano.jpg"},
+    { "nombre": "Parque Arqueológico de Tierradentro", "lat": 2.583, "lng": -76.000, "descripcion": "Tumbas y arte rupestre precolombino.", "categoria": "Cultural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Parque-arqueologico-nacional-de-Tierradentro.jpeg"},
+    { "nombre": "Isla de Providencia", "lat": 13.377, "lng": -81.368, "descripcion": "Paraíso caribeño con playas y arrecifes.", "categoria": "Playas",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/San-Andres-e-Providencia-Colombia.jpeg"},
+    { "nombre": "Páramo de Santurbán", "lat": 7.317, "lng": -72.917, "descripcion": "Ecosistema de alta montaña con lagunas.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Paramo-de-Santurban.jpeg"},
+    { "nombre": "Ráquira", "lat": 5.539, "lng": -73.634, "descripcion": "Pueblo famoso por su cerámica artesanal.", "categoria": "Cultural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Colombia-es-Pasion-_-Raquira-donde-cada-rincon-es-una-obra-de-arte-_-Facebook.jpeg"},
+    { "nombre": "Parque Nacional Macuira", "lat": 12.147, "lng": -71.331, "descripcion": "Oasis en medio del desierto de La Guajira.", "categoria": "Natural" ,imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Parque-Nacional-Macuira-Guajira-.jpeg"},
+    { "nombre": "Yopal", "lat": 5.346, "lng": -72.395, "descripcion": "Puerta de entrada a los Llanos Orientales.", "categoria": "Cultural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/📍Casanare-llanos-orientales.jpeg"},
+    { "nombre": "Ciénaga Grande de Santa Marta", "lat": 10.894, "lng": -74.480, "descripcion": "Ecosistema de manglares y aves acuáticas.", "categoria": "Natural",imagen: "https://volemosahora.com/wp-content/uploads/2025/03/Cienaga-Grande-de-Santa-Marta_-Guia-de-Viaje.jpeg"},
+
+        ];
+lugares.forEach(lugar => {
+    var marker = L.marker([lugar.lat, lugar.lng]).addTo(map);
+
+    // Crear el contenido del popup con la imagen
+    var popupContent = `
+        <div style="text-align: center;">
+            <b>${lugar.nombre}</b><br>
+            <p>${lugar.descripcion}</p>
+            <img src="${lugar.imagen}" style="width:200px; height:auto; border-radius: 8px;">
+        </div>
+    `;
+
+    // Vincular el popup al marcador
+    marker.bindPopup(popupContent);
+});
+
+        var markers = [];
+        lugares.forEach(lugar => {
+            var marker = L.marker([lugar.lat, lugar.lng], { icon: icons[lugar.categoria] })
+                .bindPopup(`<b>${lugar.nombre}</b><br>${lugar.descripcion}`)
+                .addTo(map);
+            marker.categoria = lugar.categoria;
+            markers.push(marker);
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                var category = this.getAttribute('data-category');
+                markers.forEach(marker => {
+                    if (category === "Todos" || marker.categoria === category) {
+                        map.addLayer(marker);
+                    } else {
+                        map.removeLayer(marker);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
