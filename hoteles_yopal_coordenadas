@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Hoteles - Volemos Ahora</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Hoteles en la Región</h2>
+    <div id="map"></div>
+
+    <script>
+        // Crear el mapa centrado en la región
+        var map = L.map('map').setView([5.345, -72.398], 14);
+
+        // Añadir capa de mapa base
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Cargar los hoteles desde el archivo JSON en WordPress
+        fetch('https://volemosahora.com/wp-content/uploads/2025/03/Listado_hoteles_Yopal_Coordenadas_Corregidas.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error HTTP! Estado: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(hotel => {
+                    // Verifica que el JSON tenga los nombres correctos
+                    let lat = hotel.LATITUD || hotel.lat;
+                    let lon = hotel.LONGITUD || hotel.lon;
+                    let nombre = hotel.NOMBRE || hotel.nombre;
+
+                    if (lat && lon && nombre) {
+                        L.marker([lat, lon])
+                            .addTo(map)
+                            .bindPopup(`<b>${nombre}</b>`);
+                    } else {
+                        console.warn("Datos faltantes en el hotel:", hotel);
+                    }
+                });
+            })
+            .catch(error => console.error('Error cargando los hoteles:', error));
+    </script>
+
+</body>
+</html>
