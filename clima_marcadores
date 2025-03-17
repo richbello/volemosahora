@@ -1,0 +1,144 @@
+function mapa_clima_shortcode() {
+    ob_start(); ?>
+    
+    <div>
+        <label for="filtroCiudad">Filtrar por ciudad: </label>
+        <select id="filtroCiudad">
+            <option value="todas">Todas</option>
+            <option value="Bogotá">Bogotá</option>
+            <option value="Medellín">Medellín</option>
+            <option value="Cali">Cali</option>
+            <option value="Cartagena">Cartagena</option>
+            <option value="Barranquilla">Barranquilla</option>
+            <option value="Catedral de Sal de Zipaquirá">Catedral de Sal de Zipaquirá</option>
+            <option value="Aeropuerto El Dorado">Aeropuerto El Dorado</option>
+            <option value="Comuna 13 - Medellín">Comuna 13 - Medellín</option>
+            <option value="Parque Tayrona">Parque Tayrona</option>
+            <option value="Villa de Leyva">Villa de Leyva</option>
+			
+			<option value="Laguna de Guatavita">Laguna de Guatavita</option>
+<option value="Ciudad Perdida">Ciudad Perdida</option>
+<option value="Castillo San Felipe">Castillo San Felipe</option>
+<option value="Cabo de la Vela">Cabo de la Vela</option>
+<option value="Santuario de Las Lajas">Santuario de Las Lajas</option>
+<option value="Desierto de la Tatacoa">Desierto de la Tatacoa</option>
+<option value="Islas del Rosario">Islas del Rosario</option>
+<option value="Aeropuerto José María Córdova">Aeropuerto José María Córdova</option>
+<option value="Cristo Rey - Cali">Cristo Rey - Cali</option>
+<option value="Amazonas - Leticia">Amazonas - Leticia</option>
+<option value="Nevado del Ruiz">Nevado del Ruiz</option>
+<option value="Caño Cristales">Caño Cristales</option>
+<option value="Plaza de Bolívar">Plaza de Bolívar</option>
+<option value="Parque Nacional del Cocuy">Parque Nacional del Cocuy</option>
+<option value="Parque Nacional de los Nevados">Parque Nacional de los Nevados</option>
+<option value="Cañón del Chicamocha">Cañón del Chicamocha</option>
+<option value="Parque Nacional Natural Gorgona">Parque Nacional Natural Gorgona</option>
+<option value="Termales de Santa Rosa">Termales de Santa Rosa</option>
+<option value="Malecón de Puerto Colombia">Malecón de Puerto Colombia</option>
+<option value="Parque Nacional Amacayacu">Parque Nacional Amacayacu</option>
+<option value="Catedral Metropolitana de Medellín">Catedral Metropolitana de Medellín</option>
+<option value="Chiquinquirá">Chiquinquirá</option>
+<option value="Playa Blanca">Playa Blanca</option>
+<option value="Parque Arqueológico de San Agustín">Parque Arqueológico de San Agustín</option>
+
+        </select>
+    </div>
+
+    <div id="mapaClima" style="height: 500px; margin-top: 10px;"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Configuración del mapa con Google Maps y clave API
+        const API_KEY_GOOGLE = "AIzaSyC3hQ24PR0QEZHNPzbCWcYVD5SFCHTkIZA"; // Reemplaza con tu clave API de Google Cloud
+        const map = L.map("mapaClima").setView([4.6, -74.08], 6); // Centrado en Colombia
+
+        // Carga del mapa base con Google Maps
+        L.tileLayer(`https://mts.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${API_KEY_GOOGLE}`, {
+            attribution: '&copy; Google Maps'
+        }).addTo(map);
+
+        // Datos de las ciudades con coordenadas
+        const ciudades = [
+            { nombre: "Bogotá", lat: 4.6097, lon: -74.0817 },
+            { nombre: "Medellín", lat: 6.2518, lon: -75.5636 },
+            { nombre: "Cali", lat: 3.4516, lon: -76.5320 },
+            { nombre: "Cartagena", lat: 10.3910, lon: -75.4794 },
+            { nombre: "Barranquilla", lat: 10.9685, lon: -74.7813 },
+            { nombre: "Catedral de Sal de Zipaquirá", lat: 5.015, lon: -74.005 },
+            { nombre: "Aeropuerto El Dorado", lat: 4.7016, lon: -74.1469 },
+            { nombre: "Comuna 13 - Medellín", lat: 6.2442, lon: -75.5812 },
+            { nombre: "Parque Tayrona", lat: 11.268, lon: -74.1918 },
+            { nombre: "Villa de Leyva", lat: 5.634, lon: -73.527 },
+			{ nombre: "Laguna de Guatavita", lat: 4.921, lon: -73.795},
+                { nombre: "Ciudad Perdida", lat: 11.039, lon: -73.925},
+                { nombre: "Castillo San Felipe", lat: 10.422, lon: -75.548},
+                { nombre: "Cabo de la Vela", lat: 12.203, lon: -72.170},
+                { nombre: "Santuario de Las Lajas", lat: 0.805, lon: -77.586},
+                { nombre: "Desierto de la Tatacoa", lat: 3.221, lon: -75.174},
+                { nombre: "Islas del Rosario", lat: 10.175, lon: -75.735},
+                { nombre: "Aeropuerto José María Córdova", lat: 6.167, lon: -75.423},
+                { nombre: "Cristo Rey - Cali", lat: 3.437, lon: -76.549},
+                { nombre: "Amazonas - Leticia", lat: -4.215, lon: -69.942},
+                { nombre: "Nevado del Ruiz", lat: 4.892, lon: -75.324},
+                { nombre: "Caño Cristales", lat: 2.215, lon: -73.788},
+                { nombre: "Plaza de Bolívar", lat: 4.598, lon: -74.076},
+                { nombre: "Parque Nacional del Cocuy", lat: 6.406, lon: -72.297},
+                { nombre: "Parque Nacional de los Nevados", lat: 4.883, lon: -75.375},
+                { nombre: "Cañón del Chicamocha", lat: 6.797, lon: -73.014},
+                { nombre: "Parque Nacional Natural Gorgona", lat: 2.967, lon: -78.183},
+                { nombre: "Termales de Santa Rosa", lat: 4.868, lon: -75.621},
+                { nombre: "Malecón de Puerto Colombia", lat: 10.987, lon: -74.954},
+                { nombre: "Parque Nacional Amacayacu", lat: -3.811, lon: -70.267},
+                { nombre: "Catedral Metropolitana de Medellín", lat: 6.252, lon: -75.568},
+                { nombre: "Chiquinquirá", lat: 5.617, lon: -73.817},
+                { nombre: "Playa Blanca", lat: 10.175, lon: -75.735},
+                { nombre: "Parque Arqueológico de San Agustín", lat: 1.883, lon: -76.269},
+
+			     ];
+
+        let marcadores = {};
+
+        // Función para cargar el clima y marcar las ciudades
+        function cargarClima() {
+            ciudades.forEach(ciudad => {
+                const randomTemp = (Math.random() * 40).toFixed(1); // Simulación de temperatura aleatoria para pruebas
+                const color = randomTemp > 30 ? "red" : randomTemp > 20 ? "orange" : "blue";
+
+                const marcador = L.circleMarker([ciudad.lat, ciudad.lon], {
+                    color: color,
+                    fillColor: color,
+                    fillOpacity: 0.7,
+                    radius: 10
+                }).bindPopup(`<b>${ciudad.nombre}</b><br>Temp: ${randomTemp}°C`);
+
+                marcador.addTo(map);
+                marcadores[ciudad.nombre] = marcador;
+            });
+        }
+
+        cargarClima();
+
+        // Filtrado de las ciudades
+        document.getElementById("filtroCiudad").addEventListener("change", function () {
+            const ciudadSeleccionada = this.value;
+
+            if (ciudadSeleccionada === "todas") {
+                Object.values(marcadores).forEach(marcador => map.addLayer(marcador));
+            } else {
+                Object.entries(marcadores).forEach(([nombre, marcador]) => {
+                    if (nombre === ciudadSeleccionada) {
+                        map.addLayer(marcador);
+                    } else {
+                        map.removeLayer(marcador);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <?php return ob_get_clean();
+}
+add_shortcode("mapa_clima", "mapa_clima_shortcode");
