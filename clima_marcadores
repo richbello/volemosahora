@@ -52,7 +52,7 @@ function mapa_clima_shortcode() {
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Configuración del mapa con Google Maps y clave API
-        const API_KEY_GOOGLE = "AIzaSyC3hQ24PR0QEZHNPzbCWcYVD5SFCHTkIZA"; // Reemplaza con tu clave API de Google Cloud
+        const API_KEY_GOOGLE = " COLOCAR CLAVE API KEY "; // Reemplaza con tu clave API de Google Cloud
         const map = L.map("mapaClima").setView([4.6, -74.08], 6); // Centrado en Colombia
 
         // Carga del mapa base con Google Maps
