@@ -1,0 +1,253 @@
+<section id="tarifario" class="tarifario-section">
+    <h2>Tarifario de Servicios - Volemosahora.com</h2>
+    
+    <div class="tarifario-container">
+        <!-- Publicidad y Promoción -->
+        <div class="tarifario-box">
+            <h3>Publicidad y Promoción</h3>
+            <table>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Duración</th>
+                    <th>Precio (COP)</th>
+                    <th>Incluye</th>
+                </tr>
+                <tr>
+                    <td>Publicación Destacada</td>
+                    <td>1 mes</td>
+                    <td>$150.000 - $300.000</td>
+                    <td>Aparición en la página principal y sección destacada.</td>
+                </tr>
+                <tr>
+                    <td>Banner Publicitario</td>
+                    <td>1 mes</td>
+                    <td>$200.000 - $400.000</td>
+                    <td>Ubicación estratégica en la web para mayor impacto.</td>
+                </tr>
+                <tr>
+                    <td>Pack Completo Web</td>
+                    <td>1 mes</td>
+                    <td>$500.000 - $700.000</td>
+                    <td>Publicación destacada + Banner + Promoción en redes sociales.</td>
+                </tr>
+            </table>
+        </div>
+
+      
+      <!-- Recorridos Virtuales y Mapas Interactivos -->
+<div class="tarifario-box">
+            <h3>Recorridos Virtuales y Mapas Interactivos</h3>
+            <table>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Precio (COP)</th>
+                    <th>Incluye</th>
+                </tr>
+                <tr>
+                    <td>Recorrido Virtual 360°</td>
+                    <td>$800.000 - $1.500.000</td>
+                    <td>Fotografía 360°, edición y publicación en la web.</td>
+                </tr>
+                <tr>
+                    <td>Publicación en Mapas Interactivos</td>
+                    <td>$500.000 - $900.000</td>
+                    <td>Ubicación con rutas, fotos y videos promocionales.</td>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+
+      
+        <!-- Desarrollo de Páginas Web -->
+        <div class="tarifario-box">
+            <h3>Desarrollo de Páginas Web</h3>
+            <table>
+                <tr>
+                    <th>Plan</th>
+                    <th>Precio (COP)</th>
+                    <th>Incluye</th>
+                </tr>
+                <tr>
+                    <td>Landing Page Básica</td>
+                    <td>$1.200.000</td>
+                    <td>Página de una sola sección con información clave.</td>
+                </tr>
+                <tr>
+                    <td>Sitio Web Empresarial</td>
+                    <td>$2.500.000</td>
+                    <td>Web con múltiples secciones (servicios, contacto, blog).</td>
+                </tr>
+                <tr>
+                    <td>E-commerce Turístico</td>
+                    <td>$4.000.000 - $5.000.000</td>
+                    <td>Tienda en línea para venta de paquetes y reservas.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Análisis de Datos para Turismo -->
+        <div class="tarifario-box">
+            <h3>Análisis de Datos para Turismo</h3>
+            <table>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Precio (COP)</th>
+                    <th>Incluye</th>
+                </tr>
+                <tr>
+                    <td>Reporte Básico</td>
+                    <td>$100.000 - $300.000</td>
+                    <td>Datos sobre clics, visitas y conversiones en la web.</td>
+                </tr>
+                <tr>
+                    <td>Análisis de Tendencias Turísticas</td>
+                    <td>$500.000 - $1.200.000</td>
+                    <td>Estudio de mercado con insights clave.</td>
+                </tr>
+                <tr>
+                    <td>Asesoría de Estrategia de Ventas</td>
+                    <td>$800.000 - $2.500.000</td>
+                    <td>Informe detallado con recomendaciones.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<style>
+.tarifario-section {
+    text-align: center;
+    padding: 40px;
+    background: #0d3b66;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+.tarifario-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+.tarifario-box {
+    background: #1b4965;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(13, 59, 102, 0.6);
+    max-width: 600px;
+    width: 100%;
+}
+.tarifario-box h3 {
+    color: #ffc857;
+    margin-bottom: 15px;
+}
+.tarifario-box table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.tarifario-box th, .tarifario-box td {
+    padding: 12px;
+    border: 1px solid #333;
+    text-align: left;
+}
+.tarifario-box th {
+    background: #ffc857;
+    color: #0d3b66;
+}
+.tarifario-box td {
+    background: #1b4965;
+    color: white;
+}
+</style>
+
+
+
+
+
+
+/// Precios de Lanzamiento
+
+<style>
+.tarifario-section {
+    text-align: center;
+    padding: 40px;
+    background: #0d3b66;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+.tarifario-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+.tarifario-box {
+    background: #1b4965;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(13, 59, 102, 0.6);
+    max-width: 600px;
+    width: 100%;
+    color: white;
+}
+.tarifario-box h3 {
+    color: #ffc857;
+    margin-bottom: 15px;
+}
+.tarifario-box table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.tarifario-box th, .tarifario-box td {
+    padding: 12px;
+    border: 1px solid #333;
+    text-align: left;
+    color: white;
+}
+.tarifario-box th {
+    background: #ffc857;
+    color: #0d3b66;
+}
+</style>
+
+<section class="tarifario-section">
+    <h2>🌟 Precios Especiales de Lanzamiento - Volemos Ahora 🌟</h2>
+    <div class="tarifario-container">
+        <div class="tarifario-box">
+            <table>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Precio de Lanzamiento</th>
+                </tr>
+                <tr>
+                    <td>Publicidad Digital Básica</td>
+                    <td>$200,000 COP</td>
+                </tr>
+                <tr>
+                    <td>Diseño Web Informativo</td>
+                    <td>$900,000 COP</td>
+                </tr>
+                <tr>
+                    <td>Diseño Web con Carrito</td>
+                    <td>$4,000,000 COP</td>
+                </tr>
+                <tr>
+                    <td>Producción de Videos Turísticos</td>
+                    <td>$600,000 COP</td>
+                </tr>
+                <tr>
+                    <td>Análisis de Datos para Negocios Turísticos</td>
+                    <td>$350,000 COP</td>
+                </tr>
+                <tr>
+                    <td>Promoción en “Impulsa tu negocio”</td>
+                    <td>$150,000 COP</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
